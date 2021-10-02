@@ -1,0 +1,694 @@
+2021-09-29 06:17:30.615 | INFO     | yolox.core.trainer:before_train:132 - args: Namespace(batch_size=4, cache=False, ckpt='/data/zhengxing/my_dl/train/YOLOX-main/zx_projects/yolox_s.pth', devices=1, dist_backend='nccl', dist_url=None, exp_file='third_bridge/third_bridge_exp.py', experiment_name='third_bridge_exp', fp16=False, machine_rank=0, name=None, num_machines=1, occupy=True, opts=[], resume=False, start_epoch=None)
+2021-09-29 06:17:31.307 | INFO     | yolox.core.trainer:before_train:139 - Model Summary: Params: 8.94M, Gflops: 6.66
+2021-09-29 06:17:35.278 | INFO     | yolox.core.trainer:resume_train:292 - loading checkpoint for fine tuning
+2021-09-29 06:17:35.406 | WARNING  | yolox.utils.checkpoint:load_ckpt:26 - Shape of head.cls_preds.0.weight in checkpoint is torch.Size([80, 128, 1, 1]), while shape of head.cls_preds.0.weight in model is torch.Size([1, 128, 1, 1]).
+2021-09-29 06:17:35.407 | WARNING  | yolox.utils.checkpoint:load_ckpt:26 - Shape of head.cls_preds.0.bias in checkpoint is torch.Size([80]), while shape of head.cls_preds.0.bias in model is torch.Size([1]).
+2021-09-29 06:17:35.407 | WARNING  | yolox.utils.checkpoint:load_ckpt:26 - Shape of head.cls_preds.1.weight in checkpoint is torch.Size([80, 128, 1, 1]), while shape of head.cls_preds.1.weight in model is torch.Size([1, 128, 1, 1]).
+2021-09-29 06:17:35.407 | WARNING  | yolox.utils.checkpoint:load_ckpt:26 - Shape of head.cls_preds.1.bias in checkpoint is torch.Size([80]), while shape of head.cls_preds.1.bias in model is torch.Size([1]).
+2021-09-29 06:17:35.408 | WARNING  | yolox.utils.checkpoint:load_ckpt:26 - Shape of head.cls_preds.2.weight in checkpoint is torch.Size([80, 128, 1, 1]), while shape of head.cls_preds.2.weight in model is torch.Size([1, 128, 1, 1]).
+2021-09-29 06:17:35.408 | WARNING  | yolox.utils.checkpoint:load_ckpt:26 - Shape of head.cls_preds.2.bias in checkpoint is torch.Size([80]), while shape of head.cls_preds.2.bias in model is torch.Size([1]).
+2021-09-29 06:17:35.431 | INFO     | yolox.data.datasets.coco:__init__:45 - loading annotations into memory...
+2021-09-29 06:17:35.433 | INFO     | yolox.data.datasets.coco:__init__:45 - Done (t=0.00s)
+2021-09-29 06:17:35.433 | INFO     | pycocotools.coco:__init__:88 - creating index...
+2021-09-29 06:17:35.434 | INFO     | pycocotools.coco:__init__:88 - index created!
+2021-09-29 06:17:35.451 | INFO     | yolox.core.trainer:before_train:157 - init prefetcher, this might take one minute or less...
+2021-09-29 06:17:41.095 | INFO     | yolox.data.datasets.coco:__init__:45 - loading annotations into memory...
+2021-09-29 06:17:41.097 | INFO     | yolox.data.datasets.coco:__init__:45 - Done (t=0.00s)
+2021-09-29 06:17:41.097 | INFO     | pycocotools.coco:__init__:88 - creating index...
+2021-09-29 06:17:41.097 | INFO     | pycocotools.coco:__init__:88 - index created!
+2021-09-29 06:17:41.104 | INFO     | yolox.core.trainer:before_train:185 - Training start...
+2021-09-29 06:17:41.106 | INFO     | yolox.core.trainer:before_train:186 - 
+YOLOX(
+  (backbone): YOLOPAFPN(
+    (backbone): CSPDarknet(
+      (stem): Focus(
+        (conv): BaseConv(
+          (conv): Conv2d(12, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(32, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+      )
+      (dark2): Sequential(
+        (0): BaseConv(
+          (conv): Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+        (1): CSPLayer(
+          (conv1): BaseConv(
+            (conv): Conv2d(64, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(32, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (conv2): BaseConv(
+            (conv): Conv2d(64, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(32, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (conv3): BaseConv(
+            (conv): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(64, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (m): Sequential(
+            (0): Bottleneck(
+              (conv1): BaseConv(
+                (conv): Conv2d(32, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+                (bn): BatchNorm2d(32, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+              (conv2): BaseConv(
+                (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (bn): BatchNorm2d(32, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+            )
+          )
+        )
+      )
+      (dark3): Sequential(
+        (0): BaseConv(
+          (conv): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+        (1): CSPLayer(
+          (conv1): BaseConv(
+            (conv): Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(64, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (conv2): BaseConv(
+            (conv): Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(64, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (conv3): BaseConv(
+            (conv): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (m): Sequential(
+            (0): Bottleneck(
+              (conv1): BaseConv(
+                (conv): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+                (bn): BatchNorm2d(64, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+              (conv2): BaseConv(
+                (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (bn): BatchNorm2d(64, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+            )
+            (1): Bottleneck(
+              (conv1): BaseConv(
+                (conv): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+                (bn): BatchNorm2d(64, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+              (conv2): BaseConv(
+                (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (bn): BatchNorm2d(64, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+            )
+            (2): Bottleneck(
+              (conv1): BaseConv(
+                (conv): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+                (bn): BatchNorm2d(64, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+              (conv2): BaseConv(
+                (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (bn): BatchNorm2d(64, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+            )
+          )
+        )
+      )
+      (dark4): Sequential(
+        (0): BaseConv(
+          (conv): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+        (1): CSPLayer(
+          (conv1): BaseConv(
+            (conv): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (conv2): BaseConv(
+            (conv): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (conv3): BaseConv(
+            (conv): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (m): Sequential(
+            (0): Bottleneck(
+              (conv1): BaseConv(
+                (conv): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+                (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+              (conv2): BaseConv(
+                (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+            )
+            (1): Bottleneck(
+              (conv1): BaseConv(
+                (conv): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+                (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+              (conv2): BaseConv(
+                (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+            )
+            (2): Bottleneck(
+              (conv1): BaseConv(
+                (conv): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+                (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+              (conv2): BaseConv(
+                (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+            )
+          )
+        )
+      )
+      (dark5): Sequential(
+        (0): BaseConv(
+          (conv): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(512, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+        (1): SPPBottleneck(
+          (conv1): BaseConv(
+            (conv): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (m): ModuleList(
+            (0): MaxPool2d(kernel_size=5, stride=1, padding=2, dilation=1, ceil_mode=False)
+            (1): MaxPool2d(kernel_size=9, stride=1, padding=4, dilation=1, ceil_mode=False)
+            (2): MaxPool2d(kernel_size=13, stride=1, padding=6, dilation=1, ceil_mode=False)
+          )
+          (conv2): BaseConv(
+            (conv): Conv2d(1024, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(512, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+        )
+        (2): CSPLayer(
+          (conv1): BaseConv(
+            (conv): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (conv2): BaseConv(
+            (conv): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (conv3): BaseConv(
+            (conv): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(512, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (m): Sequential(
+            (0): Bottleneck(
+              (conv1): BaseConv(
+                (conv): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+                (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+              (conv2): BaseConv(
+                (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+                (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+                (act): SiLU(inplace=True)
+              )
+            )
+          )
+        )
+      )
+    )
+    (upsample): Upsample(scale_factor=2.0, mode=nearest)
+    (lateral_conv0): BaseConv(
+      (conv): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+      (act): SiLU(inplace=True)
+    )
+    (C3_p4): CSPLayer(
+      (conv1): BaseConv(
+        (conv): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+      (conv2): BaseConv(
+        (conv): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+      (conv3): BaseConv(
+        (conv): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+      (m): Sequential(
+        (0): Bottleneck(
+          (conv1): BaseConv(
+            (conv): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (conv2): BaseConv(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+        )
+      )
+    )
+    (reduce_conv1): BaseConv(
+      (conv): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+      (act): SiLU(inplace=True)
+    )
+    (C3_p3): CSPLayer(
+      (conv1): BaseConv(
+        (conv): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+      (conv2): BaseConv(
+        (conv): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+      (conv3): BaseConv(
+        (conv): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+      (m): Sequential(
+        (0): Bottleneck(
+          (conv1): BaseConv(
+            (conv): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(64, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (conv2): BaseConv(
+            (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (bn): BatchNorm2d(64, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+        )
+      )
+    )
+    (bu_conv2): BaseConv(
+      (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+      (act): SiLU(inplace=True)
+    )
+    (C3_n3): CSPLayer(
+      (conv1): BaseConv(
+        (conv): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+      (conv2): BaseConv(
+        (conv): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+      (conv3): BaseConv(
+        (conv): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+      (m): Sequential(
+        (0): Bottleneck(
+          (conv1): BaseConv(
+            (conv): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (conv2): BaseConv(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+        )
+      )
+    )
+    (bu_conv1): BaseConv(
+      (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+      (act): SiLU(inplace=True)
+    )
+    (C3_n4): CSPLayer(
+      (conv1): BaseConv(
+        (conv): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+      (conv2): BaseConv(
+        (conv): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+      (conv3): BaseConv(
+        (conv): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(512, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+      (m): Sequential(
+        (0): Bottleneck(
+          (conv1): BaseConv(
+            (conv): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+          (conv2): BaseConv(
+            (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (bn): BatchNorm2d(256, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+            (act): SiLU(inplace=True)
+          )
+        )
+      )
+    )
+  )
+  (head): YOLOXHead(
+    (cls_convs): ModuleList(
+      (0): Sequential(
+        (0): BaseConv(
+          (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+        (1): BaseConv(
+          (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+      )
+      (1): Sequential(
+        (0): BaseConv(
+          (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+        (1): BaseConv(
+          (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+      )
+      (2): Sequential(
+        (0): BaseConv(
+          (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+        (1): BaseConv(
+          (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+      )
+    )
+    (reg_convs): ModuleList(
+      (0): Sequential(
+        (0): BaseConv(
+          (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+        (1): BaseConv(
+          (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+      )
+      (1): Sequential(
+        (0): BaseConv(
+          (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+        (1): BaseConv(
+          (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+      )
+      (2): Sequential(
+        (0): BaseConv(
+          (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+        (1): BaseConv(
+          (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+          (act): SiLU(inplace=True)
+        )
+      )
+    )
+    (cls_preds): ModuleList(
+      (0): Conv2d(128, 1, kernel_size=(1, 1), stride=(1, 1))
+      (1): Conv2d(128, 1, kernel_size=(1, 1), stride=(1, 1))
+      (2): Conv2d(128, 1, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (reg_preds): ModuleList(
+      (0): Conv2d(128, 4, kernel_size=(1, 1), stride=(1, 1))
+      (1): Conv2d(128, 4, kernel_size=(1, 1), stride=(1, 1))
+      (2): Conv2d(128, 4, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (obj_preds): ModuleList(
+      (0): Conv2d(128, 1, kernel_size=(1, 1), stride=(1, 1))
+      (1): Conv2d(128, 1, kernel_size=(1, 1), stride=(1, 1))
+      (2): Conv2d(128, 1, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (stems): ModuleList(
+      (0): BaseConv(
+        (conv): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+      (1): BaseConv(
+        (conv): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+      (2): BaseConv(
+        (conv): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(128, eps=0.001, momentum=0.03, affine=True, track_running_stats=True)
+        (act): SiLU(inplace=True)
+      )
+    )
+    (l1_loss): L1Loss()
+    (bcewithlog_loss): BCEWithLogitsLoss()
+    (iou_loss): IOUloss()
+  )
+)
+2021-09-29 06:17:41.107 | INFO     | yolox.core.trainer:before_epoch:194 - ---> start train epoch1
+2021-09-29 06:17:41.107 | INFO     | yolox.core.trainer:before_epoch:197 - --->No mosaic aug now!
+2021-09-29 06:17:41.107 | INFO     | yolox.core.trainer:before_epoch:199 - --->Add additional L1 loss now!
+2021-09-29 06:17:42.377 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 1/5, iter: 10/123, mem: 12315Mb, iter_time: 0.127s, data_time: 0.001s, total_loss: 17.77897, iou_loss: 3.65391, l1_loss: 1.99657, conf_loss: 10.18945, cls_loss: 1.93904, lr: 1.652e-08, size: 320, ETA: 0:01:16
+2021-09-29 06:17:43.525 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 1/5, iter: 20/123, mem: 12315Mb, iter_time: 0.114s, data_time: 0.001s, total_loss: 16.70867, iou_loss: 3.56382, l1_loss: 1.32393, conf_loss: 7.99622, cls_loss: 3.82470, lr: 6.610e-08, size: 160, ETA: 0:01:11
+2021-09-29 06:17:44.754 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 1/5, iter: 30/123, mem: 12315Mb, iter_time: 0.122s, data_time: 0.001s, total_loss: 14.01548, iou_loss: 3.22173, l1_loss: 1.42776, conf_loss: 7.15312, cls_loss: 2.21287, lr: 1.487e-07, size: 288, ETA: 0:01:10
+2021-09-29 06:17:45.917 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 1/5, iter: 40/123, mem: 12315Mb, iter_time: 0.116s, data_time: 0.001s, total_loss: 17.78148, iou_loss: 2.26764, l1_loss: 1.08215, conf_loss: 13.05119, cls_loss: 1.38051, lr: 2.644e-07, size: 416, ETA: 0:01:08
+2021-09-29 06:17:46.757 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 1/5, iter: 50/123, mem: 12315Mb, iter_time: 0.084s, data_time: 0.001s, total_loss: 19.37006, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 19.37006, cls_loss: 0.00000, lr: 4.131e-07, size: 320, ETA: 0:01:03
+2021-09-29 06:17:47.918 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 1/5, iter: 60/123, mem: 12315Mb, iter_time: 0.116s, data_time: 0.001s, total_loss: 7.25818, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 7.25818, cls_loss: 0.00000, lr: 5.949e-07, size: 384, ETA: 0:01:02
+2021-09-29 06:17:48.716 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 1/5, iter: 70/123, mem: 12315Mb, iter_time: 0.079s, data_time: 0.001s, total_loss: 5.61939, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 5.61939, cls_loss: 0.00000, lr: 8.097e-07, size: 160, ETA: 0:00:58
+2021-09-29 06:17:49.931 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 1/5, iter: 80/123, mem: 12315Mb, iter_time: 0.121s, data_time: 0.001s, total_loss: 11.47812, iou_loss: 2.67365, l1_loss: 1.16235, conf_loss: 5.78139, cls_loss: 1.86074, lr: 1.058e-06, size: 448, ETA: 0:00:58
+2021-09-29 06:17:50.842 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 1/5, iter: 90/123, mem: 12315Mb, iter_time: 0.091s, data_time: 0.001s, total_loss: 16.59996, iou_loss: 4.48309, l1_loss: 3.82962, conf_loss: 7.40234, cls_loss: 0.88491, lr: 1.338e-06, size: 320, ETA: 0:00:56
+2021-09-29 06:17:51.632 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 1/5, iter: 100/123, mem: 12315Mb, iter_time: 0.078s, data_time: 0.001s, total_loss: 6.50030, iou_loss: 2.43981, l1_loss: 0.98943, conf_loss: 2.26839, cls_loss: 0.80267, lr: 1.652e-06, size: 416, ETA: 0:00:53
+2021-09-29 06:17:52.442 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 1/5, iter: 110/123, mem: 12315Mb, iter_time: 0.080s, data_time: 0.001s, total_loss: 5.92003, iou_loss: 2.41586, l1_loss: 1.42478, conf_loss: 1.21723, cls_loss: 0.86216, lr: 1.999e-06, size: 416, ETA: 0:00:51
+2021-09-29 06:17:53.292 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 1/5, iter: 120/123, mem: 12315Mb, iter_time: 0.084s, data_time: 0.001s, total_loss: 6.55250, iou_loss: 2.76259, l1_loss: 1.25330, conf_loss: 1.36491, cls_loss: 1.17170, lr: 2.380e-06, size: 384, ETA: 0:00:50
+2021-09-29 06:17:53.587 | INFO     | yolox.core.trainer:save_ckpt:324 - Save weights to third_bridge/outputs/third_bridge_exp
+2021-09-29 06:17:54.589 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:171 - Evaluate in main process...
+2021-09-29 06:17:54.597 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:204 - Loading and preparing results...
+2021-09-29 06:17:54.600 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:204 - DONE (t=0.00s)
+2021-09-29 06:17:54.601 | INFO     | pycocotools.coco:loadRes:355 - creating index...
+2021-09-29 06:17:54.602 | INFO     | pycocotools.coco:loadRes:355 - index created!
+2021-09-29 06:17:54.624 | INFO     | yolox.core.trainer:evaluate_and_save_model:315 - 
+Average forward time: 2.72 ms, Average NMS time: 0.45 ms, Average inference time: 3.17 ms
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.205
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.560
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.080
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.125
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.226
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.241
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.351
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.351
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.260
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.366
+
+2021-09-29 06:17:54.624 | INFO     | yolox.core.trainer:save_ckpt:324 - Save weights to third_bridge/outputs/third_bridge_exp
+2021-09-29 06:17:54.876 | INFO     | yolox.core.trainer:before_epoch:194 - ---> start train epoch2
+2021-09-29 06:17:54.877 | INFO     | yolox.core.trainer:before_epoch:197 - --->No mosaic aug now!
+2021-09-29 06:17:54.877 | INFO     | yolox.core.trainer:before_epoch:199 - --->Add additional L1 loss now!
+2021-09-29 06:17:55.753 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 2/5, iter: 10/123, mem: 12315Mb, iter_time: 0.087s, data_time: 0.001s, total_loss: 4.10179, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 4.10179, cls_loss: 0.00000, lr: 2.923e-06, size: 288, ETA: 0:00:48
+2021-09-29 06:17:56.602 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 2/5, iter: 20/123, mem: 12315Mb, iter_time: 0.084s, data_time: 0.001s, total_loss: 1.69611, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 1.69611, cls_loss: 0.00000, lr: 3.379e-06, size: 448, ETA: 0:00:46
+2021-09-29 06:17:58.044 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 2/5, iter: 30/123, mem: 12315Mb, iter_time: 0.144s, data_time: 0.001s, total_loss: 5.23387, iou_loss: 2.45419, l1_loss: 1.00072, conf_loss: 1.08739, cls_loss: 0.69157, lr: 3.868e-06, size: 352, ETA: 0:00:47
+2021-09-29 06:17:59.194 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 2/5, iter: 40/123, mem: 12315Mb, iter_time: 0.114s, data_time: 0.001s, total_loss: 3.71387, iou_loss: 1.72727, l1_loss: 0.49069, conf_loss: 0.94634, cls_loss: 0.54957, lr: 4.390e-06, size: 224, ETA: 0:00:46
+2021-09-29 06:17:59.978 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 2/5, iter: 50/123, mem: 12315Mb, iter_time: 0.078s, data_time: 0.001s, total_loss: 5.88351, iou_loss: 2.30975, l1_loss: 1.04087, conf_loss: 1.77230, cls_loss: 0.76060, lr: 4.946e-06, size: 288, ETA: 0:00:44
+2021-09-29 06:18:00.765 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 2/5, iter: 60/123, mem: 12315Mb, iter_time: 0.078s, data_time: 0.001s, total_loss: 6.13651, iou_loss: 2.23231, l1_loss: 1.20573, conf_loss: 2.01970, cls_loss: 0.67877, lr: 5.534e-06, size: 352, ETA: 0:00:43
+2021-09-29 06:18:01.553 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 2/5, iter: 70/123, mem: 12315Mb, iter_time: 0.078s, data_time: 0.001s, total_loss: 12.97773, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 12.97773, cls_loss: 0.00000, lr: 6.155e-06, size: 384, ETA: 0:00:41
+2021-09-29 06:18:02.778 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 2/5, iter: 80/123, mem: 12315Mb, iter_time: 0.122s, data_time: 0.001s, total_loss: 12.45095, iou_loss: 3.85629, l1_loss: 2.66770, conf_loss: 5.11666, cls_loss: 0.81030, lr: 6.810e-06, size: 480, ETA: 0:00:41
+2021-09-29 06:18:03.606 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 2/5, iter: 90/123, mem: 12315Mb, iter_time: 0.082s, data_time: 0.001s, total_loss: 6.53811, iou_loss: 2.40588, l1_loss: 1.25706, conf_loss: 2.19253, cls_loss: 0.68264, lr: 7.497e-06, size: 480, ETA: 0:00:39
+2021-09-29 06:18:04.435 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 2/5, iter: 100/123, mem: 12315Mb, iter_time: 0.082s, data_time: 0.001s, total_loss: 4.53927, iou_loss: 2.26418, l1_loss: 0.75594, conf_loss: 0.75075, cls_loss: 0.76840, lr: 8.217e-06, size: 320, ETA: 0:00:38
+2021-09-29 06:18:05.287 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 2/5, iter: 110/123, mem: 12315Mb, iter_time: 0.085s, data_time: 0.001s, total_loss: 6.04728, iou_loss: 1.78599, l1_loss: 0.47075, conf_loss: 1.92082, cls_loss: 1.86972, lr: 8.971e-06, size: 224, ETA: 0:00:37
+2021-09-29 06:18:06.054 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 2/5, iter: 120/123, mem: 12315Mb, iter_time: 0.076s, data_time: 0.001s, total_loss: 3.53016, iou_loss: 1.67039, l1_loss: 0.67543, conf_loss: 0.66950, cls_loss: 0.51484, lr: 9.758e-06, size: 384, ETA: 0:00:36
+2021-09-29 06:18:06.315 | INFO     | yolox.core.trainer:save_ckpt:324 - Save weights to third_bridge/outputs/third_bridge_exp
+2021-09-29 06:18:07.159 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:171 - Evaluate in main process...
+2021-09-29 06:18:07.166 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:204 - Loading and preparing results...
+2021-09-29 06:18:07.168 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:204 - DONE (t=0.00s)
+2021-09-29 06:18:07.169 | INFO     | pycocotools.coco:loadRes:355 - creating index...
+2021-09-29 06:18:07.170 | INFO     | pycocotools.coco:loadRes:355 - index created!
+2021-09-29 06:18:07.187 | INFO     | yolox.core.trainer:evaluate_and_save_model:315 - 
+Average forward time: 2.46 ms, Average NMS time: 0.44 ms, Average inference time: 2.90 ms
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.349
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.703
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.321
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.402
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.368
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.441
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.441
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.509
+
+2021-09-29 06:18:07.188 | INFO     | yolox.core.trainer:save_ckpt:324 - Save weights to third_bridge/outputs/third_bridge_exp
+2021-09-29 06:18:07.431 | INFO     | yolox.core.trainer:before_epoch:194 - ---> start train epoch3
+2021-09-29 06:18:07.431 | INFO     | yolox.core.trainer:before_epoch:197 - --->No mosaic aug now!
+2021-09-29 06:18:07.432 | INFO     | yolox.core.trainer:before_epoch:199 - --->Add additional L1 loss now!
+2021-09-29 06:18:08.279 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 3/5, iter: 10/123, mem: 12315Mb, iter_time: 0.084s, data_time: 0.001s, total_loss: 6.01409, iou_loss: 2.10742, l1_loss: 0.74019, conf_loss: 2.52740, cls_loss: 0.63908, lr: 1.083e-05, size: 288, ETA: 0:00:34
+2021-09-29 06:18:09.043 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 3/5, iter: 20/123, mem: 12315Mb, iter_time: 0.076s, data_time: 0.001s, total_loss: 8.09280, iou_loss: 2.06344, l1_loss: 0.55200, conf_loss: 2.93250, cls_loss: 2.54486, lr: 1.169e-05, size: 160, ETA: 0:00:33
+2021-09-29 06:18:10.307 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 3/5, iter: 30/123, mem: 12315Mb, iter_time: 0.126s, data_time: 0.001s, total_loss: 6.07756, iou_loss: 2.65425, l1_loss: 1.04515, conf_loss: 1.67936, cls_loss: 0.69880, lr: 1.259e-05, size: 256, ETA: 0:00:32
+2021-09-29 06:18:11.194 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 3/5, iter: 40/123, mem: 12315Mb, iter_time: 0.088s, data_time: 0.001s, total_loss: 3.31346, iou_loss: 1.29698, l1_loss: 0.54199, conf_loss: 1.04134, cls_loss: 0.43315, lr: 1.352e-05, size: 416, ETA: 0:00:31
+2021-09-29 06:18:12.040 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 3/5, iter: 50/123, mem: 12315Mb, iter_time: 0.084s, data_time: 0.001s, total_loss: 5.83439, iou_loss: 2.28609, l1_loss: 0.73043, conf_loss: 2.17903, cls_loss: 0.63883, lr: 1.448e-05, size: 160, ETA: 0:00:30
+2021-09-29 06:18:12.851 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 3/5, iter: 60/123, mem: 12315Mb, iter_time: 0.081s, data_time: 0.001s, total_loss: 6.18809, iou_loss: 2.50242, l1_loss: 0.71423, conf_loss: 2.33662, cls_loss: 0.63482, lr: 1.547e-05, size: 160, ETA: 0:00:29
+2021-09-29 06:18:13.657 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 3/5, iter: 70/123, mem: 12315Mb, iter_time: 0.080s, data_time: 0.001s, total_loss: 5.54871, iou_loss: 2.75094, l1_loss: 1.06486, conf_loss: 1.01671, cls_loss: 0.71621, lr: 1.650e-05, size: 352, ETA: 0:00:28
+2021-09-29 06:18:14.451 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 3/5, iter: 80/123, mem: 12315Mb, iter_time: 0.079s, data_time: 0.001s, total_loss: 3.97508, iou_loss: 1.16221, l1_loss: 0.27178, conf_loss: 2.10757, cls_loss: 0.43352, lr: 1.756e-05, size: 288, ETA: 0:00:27
+2021-09-29 06:18:15.276 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 3/5, iter: 90/123, mem: 12315Mb, iter_time: 0.082s, data_time: 0.001s, total_loss: 4.86491, iou_loss: 2.50594, l1_loss: 0.91127, conf_loss: 0.75667, cls_loss: 0.69104, lr: 1.866e-05, size: 320, ETA: 0:00:26
+2021-09-29 06:18:16.316 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 3/5, iter: 100/123, mem: 12315Mb, iter_time: 0.103s, data_time: 0.001s, total_loss: 7.99679, iou_loss: 3.83648, l1_loss: 1.39002, conf_loss: 1.46002, cls_loss: 1.31027, lr: 1.978e-05, size: 192, ETA: 0:00:25
+2021-09-29 06:18:17.142 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 3/5, iter: 110/123, mem: 12315Mb, iter_time: 0.082s, data_time: 0.001s, total_loss: 1.01457, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 1.01457, cls_loss: 0.00000, lr: 2.094e-05, size: 320, ETA: 0:00:24
+2021-09-29 06:18:17.937 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 3/5, iter: 120/123, mem: 12315Mb, iter_time: 0.079s, data_time: 0.001s, total_loss: 3.29281, iou_loss: 1.58360, l1_loss: 0.44958, conf_loss: 0.74624, cls_loss: 0.51340, lr: 2.214e-05, size: 288, ETA: 0:00:23
+2021-09-29 06:18:18.174 | INFO     | yolox.core.trainer:save_ckpt:324 - Save weights to third_bridge/outputs/third_bridge_exp
+2021-09-29 06:18:18.990 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:171 - Evaluate in main process...
+2021-09-29 06:18:19.003 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:204 - Loading and preparing results...
+2021-09-29 06:18:19.007 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:204 - DONE (t=0.00s)
+2021-09-29 06:18:19.008 | INFO     | pycocotools.coco:loadRes:355 - creating index...
+2021-09-29 06:18:19.009 | INFO     | pycocotools.coco:loadRes:355 - index created!
+2021-09-29 06:18:19.028 | INFO     | yolox.core.trainer:evaluate_and_save_model:315 - 
+Average forward time: 2.32 ms, Average NMS time: 0.43 ms, Average inference time: 2.75 ms
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.458
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.718
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.533
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.165
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.515
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.481
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.581
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.581
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.220
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.637
+
+2021-09-29 06:18:19.029 | INFO     | yolox.core.trainer:save_ckpt:324 - Save weights to third_bridge/outputs/third_bridge_exp
+2021-09-29 06:18:19.291 | INFO     | yolox.core.trainer:before_epoch:194 - ---> start train epoch4
+2021-09-29 06:18:19.291 | INFO     | yolox.core.trainer:before_epoch:197 - --->No mosaic aug now!
+2021-09-29 06:18:19.292 | INFO     | yolox.core.trainer:before_epoch:199 - --->Add additional L1 loss now!
+2021-09-29 06:18:20.189 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 4/5, iter: 10/123, mem: 12315Mb, iter_time: 0.089s, data_time: 0.001s, total_loss: 2.35920, iou_loss: 1.21137, l1_loss: 0.24373, conf_loss: 0.39669, cls_loss: 0.50742, lr: 2.374e-05, size: 160, ETA: 0:00:22
+2021-09-29 06:18:21.120 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 4/5, iter: 20/123, mem: 12315Mb, iter_time: 0.093s, data_time: 0.001s, total_loss: 0.31784, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 0.31784, cls_loss: 0.00000, lr: 2.501e-05, size: 320, ETA: 0:00:21
+2021-09-29 06:18:22.022 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 4/5, iter: 30/123, mem: 12315Mb, iter_time: 0.090s, data_time: 0.001s, total_loss: 4.93918, iou_loss: 2.42778, l1_loss: 0.48564, conf_loss: 1.28758, cls_loss: 0.73818, lr: 2.631e-05, size: 224, ETA: 0:00:20
+2021-09-29 06:18:22.841 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 4/5, iter: 40/123, mem: 12315Mb, iter_time: 0.081s, data_time: 0.001s, total_loss: 14.21126, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 14.21126, cls_loss: 0.00000, lr: 2.764e-05, size: 256, ETA: 0:00:19
+2021-09-29 06:18:23.585 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 4/5, iter: 50/123, mem: 12315Mb, iter_time: 0.074s, data_time: 0.001s, total_loss: 5.29137, iou_loss: 2.21040, l1_loss: 0.64290, conf_loss: 1.81366, cls_loss: 0.62440, lr: 2.901e-05, size: 192, ETA: 0:00:18
+2021-09-29 06:18:24.349 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 4/5, iter: 60/123, mem: 12315Mb, iter_time: 0.076s, data_time: 0.001s, total_loss: 5.80321, iou_loss: 2.66791, l1_loss: 0.95583, conf_loss: 1.46090, cls_loss: 0.71858, lr: 3.041e-05, size: 256, ETA: 0:00:17
+2021-09-29 06:18:25.162 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 4/5, iter: 70/123, mem: 12315Mb, iter_time: 0.081s, data_time: 0.001s, total_loss: 8.50295, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 8.50295, cls_loss: 0.00000, lr: 3.185e-05, size: 448, ETA: 0:00:16
+2021-09-29 06:18:25.997 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 4/5, iter: 80/123, mem: 12315Mb, iter_time: 0.083s, data_time: 0.001s, total_loss: 0.48855, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 0.48855, cls_loss: 0.00000, lr: 3.331e-05, size: 320, ETA: 0:00:15
+2021-09-29 06:18:26.789 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 4/5, iter: 90/123, mem: 12315Mb, iter_time: 0.079s, data_time: 0.001s, total_loss: 4.98345, iou_loss: 1.77331, l1_loss: 0.55356, conf_loss: 2.13030, cls_loss: 0.52628, lr: 3.481e-05, size: 288, ETA: 0:00:14
+2021-09-29 06:18:27.540 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 4/5, iter: 100/123, mem: 12315Mb, iter_time: 0.075s, data_time: 0.001s, total_loss: 9.90911, iou_loss: 2.37088, l1_loss: 0.65569, conf_loss: 5.77321, cls_loss: 1.10933, lr: 3.635e-05, size: 160, ETA: 0:00:13
+2021-09-29 06:18:28.319 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 4/5, iter: 110/123, mem: 12315Mb, iter_time: 0.077s, data_time: 0.001s, total_loss: 0.54563, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 0.54563, cls_loss: 0.00000, lr: 3.791e-05, size: 416, ETA: 0:00:12
+2021-09-29 06:18:29.110 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 4/5, iter: 120/123, mem: 12315Mb, iter_time: 0.079s, data_time: 0.001s, total_loss: 0.24015, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 0.24015, cls_loss: 0.00000, lr: 3.951e-05, size: 192, ETA: 0:00:11
+2021-09-29 06:18:29.356 | INFO     | yolox.core.trainer:save_ckpt:324 - Save weights to third_bridge/outputs/third_bridge_exp
+2021-09-29 06:18:30.176 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:171 - Evaluate in main process...
+2021-09-29 06:18:30.186 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:204 - Loading and preparing results...
+2021-09-29 06:18:30.188 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:204 - DONE (t=0.00s)
+2021-09-29 06:18:30.189 | INFO     | pycocotools.coco:loadRes:355 - creating index...
+2021-09-29 06:18:30.190 | INFO     | pycocotools.coco:loadRes:355 - index created!
+2021-09-29 06:18:30.208 | INFO     | yolox.core.trainer:evaluate_and_save_model:315 - 
+Average forward time: 2.49 ms, Average NMS time: 0.45 ms, Average inference time: 2.94 ms
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.457
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.772
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.508
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.070
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.523
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.511
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.605
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.605
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.500
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.622
+
+2021-09-29 06:18:30.208 | INFO     | yolox.core.trainer:save_ckpt:324 - Save weights to third_bridge/outputs/third_bridge_exp
+2021-09-29 06:18:30.378 | INFO     | yolox.core.trainer:before_epoch:194 - ---> start train epoch5
+2021-09-29 06:18:30.379 | INFO     | yolox.core.trainer:before_epoch:197 - --->No mosaic aug now!
+2021-09-29 06:18:30.379 | INFO     | yolox.core.trainer:before_epoch:199 - --->Add additional L1 loss now!
+2021-09-29 06:18:31.276 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 5/5, iter: 10/123, mem: 12315Mb, iter_time: 0.089s, data_time: 0.001s, total_loss: 0.45522, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 0.45522, cls_loss: 0.00000, lr: 4.164e-05, size: 320, ETA: 0:00:10
+2021-09-29 06:18:32.118 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 5/5, iter: 20/123, mem: 12315Mb, iter_time: 0.084s, data_time: 0.001s, total_loss: 3.76078, iou_loss: 1.50790, l1_loss: 0.48840, conf_loss: 1.30029, cls_loss: 0.46419, lr: 4.332e-05, size: 384, ETA: 0:00:09
+2021-09-29 06:18:32.995 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 5/5, iter: 30/123, mem: 12315Mb, iter_time: 0.087s, data_time: 0.001s, total_loss: 4.56951, iou_loss: 2.47589, l1_loss: 0.56843, conf_loss: 0.66106, cls_loss: 0.86413, lr: 4.503e-05, size: 160, ETA: 0:00:08
+2021-09-29 06:18:33.865 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 5/5, iter: 40/123, mem: 12315Mb, iter_time: 0.086s, data_time: 0.001s, total_loss: 14.27794, iou_loss: 2.23094, l1_loss: 0.79781, conf_loss: 9.41904, cls_loss: 1.83014, lr: 4.677e-05, size: 448, ETA: 0:00:07
+2021-09-29 06:18:34.678 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 5/5, iter: 50/123, mem: 12315Mb, iter_time: 0.081s, data_time: 0.001s, total_loss: 8.06559, iou_loss: 2.19390, l1_loss: 0.72517, conf_loss: 4.42765, cls_loss: 0.71887, lr: 4.854e-05, size: 256, ETA: 0:00:06
+2021-09-29 06:18:35.650 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 5/5, iter: 60/123, mem: 12315Mb, iter_time: 0.097s, data_time: 0.001s, total_loss: 2.16363, iou_loss: 0.00000, l1_loss: 0.00000, conf_loss: 2.16363, cls_loss: 0.00000, lr: 5.035e-05, size: 448, ETA: 0:00:05
+2021-09-29 06:18:36.623 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 5/5, iter: 70/123, mem: 12315Mb, iter_time: 0.097s, data_time: 0.001s, total_loss: 4.96861, iou_loss: 1.97461, l1_loss: 0.63949, conf_loss: 0.87485, cls_loss: 1.47965, lr: 5.219e-05, size: 224, ETA: 0:00:04
+2021-09-29 06:18:37.495 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 5/5, iter: 80/123, mem: 12315Mb, iter_time: 0.087s, data_time: 0.001s, total_loss: 4.87617, iou_loss: 2.24397, l1_loss: 1.23746, conf_loss: 0.70919, cls_loss: 0.68555, lr: 5.407e-05, size: 448, ETA: 0:00:03
+2021-09-29 06:18:38.322 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 5/5, iter: 90/123, mem: 12315Mb, iter_time: 0.082s, data_time: 0.001s, total_loss: 8.13349, iou_loss: 2.61546, l1_loss: 0.79145, conf_loss: 3.87714, cls_loss: 0.84944, lr: 5.597e-05, size: 160, ETA: 0:00:02
+2021-09-29 06:18:39.122 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 5/5, iter: 100/123, mem: 12315Mb, iter_time: 0.079s, data_time: 0.001s, total_loss: 6.92867, iou_loss: 2.43626, l1_loss: 0.97591, conf_loss: 2.88096, cls_loss: 0.63554, lr: 5.791e-05, size: 160, ETA: 0:00:02
+2021-09-29 06:18:39.927 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 5/5, iter: 110/123, mem: 12315Mb, iter_time: 0.080s, data_time: 0.001s, total_loss: 4.15562, iou_loss: 2.03379, l1_loss: 0.53776, conf_loss: 1.00112, cls_loss: 0.58295, lr: 5.989e-05, size: 320, ETA: 0:00:01
+2021-09-29 06:18:40.770 | INFO     | yolox.core.trainer:after_iter:252 - epoch: 5/5, iter: 120/123, mem: 12315Mb, iter_time: 0.084s, data_time: 0.001s, total_loss: 3.52627, iou_loss: 1.91201, l1_loss: 0.41775, conf_loss: 0.66636, cls_loss: 0.53016, lr: 6.189e-05, size: 288, ETA: 0:00:00
+2021-09-29 06:18:41.022 | INFO     | yolox.core.trainer:save_ckpt:324 - Save weights to third_bridge/outputs/third_bridge_exp
+2021-09-29 06:18:41.839 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:171 - Evaluate in main process...
+2021-09-29 06:18:41.844 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:204 - Loading and preparing results...
+2021-09-29 06:18:41.846 | INFO     | yolox.evaluators.coco_evaluator:evaluate_prediction:204 - DONE (t=0.00s)
+2021-09-29 06:18:41.846 | INFO     | pycocotools.coco:loadRes:355 - creating index...
+2021-09-29 06:18:41.847 | INFO     | pycocotools.coco:loadRes:355 - index created!
+2021-09-29 06:18:41.860 | INFO     | yolox.core.trainer:evaluate_and_save_model:315 - 
+Average forward time: 2.46 ms, Average NMS time: 0.44 ms, Average inference time: 2.89 ms
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.533
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.890
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.655
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = -1.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.167
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.563
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.549
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.641
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.641
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = -1.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.660
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.637
+
+2021-09-29 06:18:41.861 | INFO     | yolox.core.trainer:save_ckpt:324 - Save weights to third_bridge/outputs/third_bridge_exp
+2021-09-29 06:18:42.104 | INFO     | yolox.core.trainer:after_train:190 - Training of experiment is done and the best AP is 53.25

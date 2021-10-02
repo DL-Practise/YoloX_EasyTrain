@@ -1,0 +1,14 @@
+2021-09-29 06:24:35.227 | INFO     | yolox.core.trainer:before_train:132 - args: Namespace(batch_size=4, cache=False, ckpt='/data/zhengxing/my_dl/train/YOLOX-main/zx_projects/yolox_s.pth', devices=1, dist_backend='nccl', dist_url=None, exp_file='third_bridge/third_bridge_exp.py', experiment_name='third_bridge_exp', fp16=False, machine_rank=0, name=None, num_machines=1, occupy=True, opts=[], resume=False, start_epoch=None)
+2021-09-29 06:24:35.646 | INFO     | yolox.core.trainer:before_train:139 - Model Summary: Params: 8.94M, Gflops: 6.66
+2021-09-29 06:24:39.348 | INFO     | yolox.core.trainer:resume_train:292 - loading checkpoint for fine tuning
+2021-09-29 06:24:39.475 | WARNING  | yolox.utils.checkpoint:load_ckpt:26 - Shape of head.cls_preds.0.weight in checkpoint is torch.Size([80, 128, 1, 1]), while shape of head.cls_preds.0.weight in model is torch.Size([1, 128, 1, 1]).
+2021-09-29 06:24:39.476 | WARNING  | yolox.utils.checkpoint:load_ckpt:26 - Shape of head.cls_preds.0.bias in checkpoint is torch.Size([80]), while shape of head.cls_preds.0.bias in model is torch.Size([1]).
+2021-09-29 06:24:39.476 | WARNING  | yolox.utils.checkpoint:load_ckpt:26 - Shape of head.cls_preds.1.weight in checkpoint is torch.Size([80, 128, 1, 1]), while shape of head.cls_preds.1.weight in model is torch.Size([1, 128, 1, 1]).
+2021-09-29 06:24:39.476 | WARNING  | yolox.utils.checkpoint:load_ckpt:26 - Shape of head.cls_preds.1.bias in checkpoint is torch.Size([80]), while shape of head.cls_preds.1.bias in model is torch.Size([1]).
+2021-09-29 06:24:39.476 | WARNING  | yolox.utils.checkpoint:load_ckpt:26 - Shape of head.cls_preds.2.weight in checkpoint is torch.Size([80, 128, 1, 1]), while shape of head.cls_preds.2.weight in model is torch.Size([1, 128, 1, 1]).
+2021-09-29 06:24:39.477 | WARNING  | yolox.utils.checkpoint:load_ckpt:26 - Shape of head.cls_preds.2.bias in checkpoint is torch.Size([80]), while shape of head.cls_preds.2.bias in model is torch.Size([1]).
+2021-09-29 06:24:39.499 | INFO     | yolox.data.datasets.coco:__init__:45 - loading annotations into memory...
+2021-09-29 06:24:39.501 | INFO     | yolox.data.datasets.coco:__init__:45 - Done (t=0.00s)
+2021-09-29 06:24:39.502 | INFO     | pycocotools.coco:__init__:88 - creating index...
+2021-09-29 06:24:39.502 | INFO     | pycocotools.coco:__init__:88 - index created!
+2021-09-29 06:24:39.522 | INFO     | yolox.core.trainer:before_train:157 - init prefetcher, this might take one minute or less...
