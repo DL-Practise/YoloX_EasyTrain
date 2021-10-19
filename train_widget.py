@@ -88,7 +88,6 @@ class CTrainWidget(QWidget, cUi):
         if self.m_prj.is_train():
             self.m_prj.stop_train()
             self.btnTrain.setText("开始训练")
-            
         else:
             gpu_count = self.editGpu.text()
             batch_size = self.editBatch.text()
@@ -99,6 +98,7 @@ class CTrainWidget(QWidget, cUi):
                 mix_train = False
             self.m_prj.start_train(gpu_count, batch_size, mix_train, pretrain, self.info_cb)
             self.btnTrain.setText("停止训练")
+            self.showFigure.clear_draw()
 
     def on_editRate_textChanged(self):
         print(self.editRate.text())
@@ -154,6 +154,15 @@ class Figure_Canvas(FigureCanvas):
             self.map_75.append(add_data['map'][1])
         self.update_draw()
 
+    def clear_draw(self):
+        self.ax_total_loss.clear()
+        self.ax_iou_loss.clear()
+        self.ax_conf_loss.clear()
+        self.ax_cls_loss.clear()
+        self.ax_lr.clear()
+        self.ax_map.clear()
+        self.draw()
+
     def update_draw(self):
         self.ax_total_loss.clear()
         self.ax_total_loss.set_title("total loss")
@@ -181,7 +190,6 @@ class Figure_Canvas(FigureCanvas):
         handles, labels = self.ax_map.get_legend_handles_labels()
         self.ax_map.legend(handles, labels)
         #self.ax_map.legend(handles=[line_map50,line_map50_95,line_map75],labels=['map50', 'map50-95', 'map75'],loc='best')
-
         self.draw()
 
 if __name__ == "__main__":

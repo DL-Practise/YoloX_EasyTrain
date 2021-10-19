@@ -38,7 +38,7 @@ def train_func(train_cmd,  prj):
     info_cb({'train_status': 'finished'})
 
 class ZXProj():
-    def __init__(self, prj_name):
+    def __init__(self, prj_name, base_model='yolox_s'):
         self.prj_name = prj_name
         self.root_dir = './projects/'
         self.prj_dir = self.root_dir + self.prj_name
@@ -48,6 +48,7 @@ class ZXProj():
         self.model_dir = self.root_dir + self.prj_name + "/outputs/%s_exp/"%self.prj_name
         self.log_file = self.root_dir + self.prj_name + "/outputs/%s_exp/train_log.txt"%self.prj_name
         self.vis_dir = self.root_dir + self.prj_name + "/outputs/%s_exp/vis_res/"%self.prj_name
+        self.prj_file = self.root_dir + self.prj_name + "/prj_info.txt"
         self.exp_cache = []
         
         self.train_process = None
@@ -58,14 +59,15 @@ class ZXProj():
         self.accu_info = {'epoch': 0, 'map': [0.0, 0.0, 0.0]}
 
         #self.yolox_root = '/data/zhengxing/my_dl/train/YOLOX-main/' #############??????
-        self.create_proj()
+        self.create_proj(base_model)
 
-    def create_proj(self):
+    def create_proj(self, base_model):
         if not os.path.exists(self.prj_dir):
             print("prj: ", self.prj_dir, " is not exist. create it")
             os.makedirs(self.prj_dir)
             os.makedirs(self.outputs_dir)
-            shutil.copy('backup/backup_exp.py', self.exp_file)
+            #shutil.copy('backup/backup_exp.py', self.exp_file)
+            shutil.copy('backup/%s.py'%base_model, self.exp_file)
             shutil.copy('backup/backup_classes.py', self.class_file)
         else:
             print("prj: ", self.prj_dir, " is already exist. give up create")
@@ -76,21 +78,32 @@ class ZXProj():
         if os.path.exists(self.prj_dir):
             shutil.rmtree(self.prj_dir)
            
-    def reset_exp(self):
+    def reset_exp(self, base_model):
+        yolox_root = self._get_exp_value('yolox_root')
+        data_dir = self._get_exp_value('data_dir')
+        num_classes = self._get_exp_value('num_classes')
         if not os.path.exists(self.prj_dir):
             print("prj: ", self.prj_dir, " is not exist. give up reset exp")
         else:
             print("prj: ", self.prj_dir, " is exist. start to get exp")
-            shutil.copy('backup/backup_exp.py', self.exp_file)
+            #shutil.copy('backup/backup_exp.py', self.exp_file)
+            shutil.copy('backup/%s.py'%base_model, self.exp_file)
+        
         self._load_exp_file_to_cache()
-        self._modify_exp_cache("output_dir", self.outputs_dir)
+        self._modify_exp_cache("yolox_root", yolox_root)
+        self._modify_exp_cache("data_dir", data_dir)
+        self._modify_exp_cache("num_classes", num_classes)
+        self._modify_exp_cache("output_dir", '\"' + self.outputs_dir + '\"')
+        self.save_exp(self.get_exp())
+
 
     def get_exp(self):
         IGNORE_KEYS = ['output_dir', 'exp_name']
         now_key = None
         config_map = {}
         for line in self.exp_cache:
-            
+            if 'def' in line and 'get_model' in line:
+                break
             if line.strip(' ').startswith('#') and '---' in line and 'config' in line:
                 now_key = line.replace('#','').replace('-', '').lstrip().rstrip()
                 if now_key not in config_map.keys():

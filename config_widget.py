@@ -90,18 +90,15 @@ class CConfigWidget(QWidget, cUi):
             for sub_key in self.edit_map[key].keys():
                 edit_value = self.edit_map[key][sub_key]
                 self.config_map[key][sub_key] = edit_value.text()
-        #print(self.config_map)
-
         self.m_prj.save_exp(self.config_map)
-
+        
         check_info = self.check_import_config()
         if check_info != 'ok':
             reply = QMessageBox.warning(self,
                   u'错误', 
                   check_info,
                   QMessageBox.Yes)
-            return
-    
+
     def get_config_value(self, key):
         for root_key in self.config_map.keys():
             for sub_key in self.config_map[root_key].keys():
@@ -119,8 +116,12 @@ class CConfigWidget(QWidget, cUi):
     @pyqtSlot()
     def on_btnReset_clicked(self):
         print('button reset clicked')
-        self.m_prj.reset_exp()
-        self.show_prj_config()
+
+        model_names=('yolox_s','yolox_m','yolox_l','yolox_tiny','yolox_nano')
+        model_name,ok=QInputDialog.getItem(self,"选择重置到哪个基线模型","基线模型",model_names,0,False)
+        if ok and model_name:
+            self.m_prj.reset_exp(model_name)
+            self.show_prj_config()
 
     def on_radioSimple_toggled(self):
         if self.radioSimple.isChecked():

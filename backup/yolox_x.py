@@ -10,7 +10,7 @@ from yolox.exp import Exp as MyExp
 class Exp(MyExp):
     def __init__(self):
         super(Exp, self).__init__()
-        
+ 
         self.output_dir = 
         
         # ---------------- yolox config ---------------- #
@@ -18,8 +18,8 @@ class Exp(MyExp):
 
         # ---------------- model config ---------------- #
         self.num_classes = 80
-        self.depth = 1.00
-        self.width = 1.00
+        self.depth = 1.33
+        self.width = 1.25
 
         # ---------------- dataloader config ---------------- #
         # set worker to 4 for shorter dataloader init time

@@ -64,8 +64,8 @@ class CMainWidget(QWidget, cUi):
             prj_name = item.text(0)
             self.change_proj(prj_name)
 
-    def change_proj(self, proj_name):
-        self.m_proj = ZXProj(proj_name)
+    def change_proj(self, proj_name, model_name=None):
+        self.m_proj = ZXProj(proj_name, model_name)
         self.config_widget.set_prj(self.m_proj)
         self.train_widget.set_prj(self.m_proj)
         self.infer_widget.set_prj(self.m_proj)
@@ -84,22 +84,27 @@ class CMainWidget(QWidget, cUi):
                   QMessageBox.Yes)
             return
         else:
-            text, okPressed = QInputDialog.getText(self, "请输出工程名称","工程名（英文且不包含空格等特殊字符）:", QLineEdit.Normal, "")
+            text, okPressed = QInputDialog.getText(self, "请输入工程名称","工程名（英文且不包含空格等特殊字符）:", QLineEdit.Normal, "")
             if okPressed and text != '':
-                iterator = QTreeWidgetItemIterator(self.treeProj)
-                while iterator.value():
-                    item = iterator.value()
-                    if item.text(0) == text:
-                        reply = QMessageBox.warning(self,
-                            u'警告', 
-                            u'该工程已经存在', 
-                            QMessageBox.Yes)
-                        return   
-                    iterator.__iadd__(1) 
+                model_names=('yolox_s','yolox_m','yolox_l','yolox_tiny','yolox_nano')
+                model_name,ok=QInputDialog.getItem(self,"选择基线模型","基线模型",model_names,0,False)
+                if ok and model_name:
+                    proj_show_name = text + ':' +  model_name
+                    iterator = QTreeWidgetItemIterator(self.treeProj)
+                    while iterator.value():
+                        item = iterator.value()
+                        if item.text(0) == proj_show_name:
+                            reply = QMessageBox.warning(self,
+                                u'警告', 
+                                u'该工程已经存在', 
+                                QMessageBox.Yes)
+                            return   
+                        iterator.__iadd__(1) 
 
-                item = QTreeWidgetItem(self.treeProj)
-                item.setText(0, text)
-                self.change_proj(text)
+                    item = QTreeWidgetItem(self.treeProj)
+                    item.setText(0, text)
+                    self.treeProj.setCurrentItem(item)
+                    self.change_proj(text, model_name)
 
     @pyqtSlot()
     def on_btnDelPrj_clicked(self):
