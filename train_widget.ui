@@ -66,6 +66,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QRadioButton" name="radioCache">
+         <property name="text">
+          <string>使用缓存</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="btnPretrain">
          <property name="text">
           <string>预训练模型</string>

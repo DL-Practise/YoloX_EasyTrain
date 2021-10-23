@@ -92,13 +92,13 @@ class CTrainWidget(QWidget, cUi):
             gpu_count = self.editGpu.text()
             batch_size = self.editBatch.text()
             pretrain = self.editPretrain.text()
-            if self.radioFp16.isChecked():
-                mix_train = True
-            else:
-                mix_train = False
-            self.m_prj.start_train(gpu_count, batch_size, mix_train, pretrain, self.info_cb)
+            mix_train = True if self.radioFp16.isChecked() else False
+            use_cache = True if self.radioCache.isChecked() else False
+            self.m_prj.start_train(gpu_count, batch_size, mix_train, use_cache, pretrain, self.info_cb)
             self.btnTrain.setText("停止训练")
             self.showFigure.clear_draw()
+            self.progressBar.setValue(0)
+            self.progressBar.setFormat(u'')
 
     def on_editRate_textChanged(self):
         print(self.editRate.text())
@@ -155,6 +155,18 @@ class Figure_Canvas(FigureCanvas):
         self.update_draw()
 
     def clear_draw(self):
+        self.iters = []
+        self.total_losses = []
+        self.iou_losses = []
+        #self.l1_losses = []
+        self.conf_losses = []
+        self.cls_losses = []
+        self.lrs = []
+        self.epochs = []
+        self.map_50 = []
+        self.map_50_95 = []
+        self.map_75 = []
+
         self.ax_total_loss.clear()
         self.ax_iou_loss.clear()
         self.ax_conf_loss.clear()

@@ -9,6 +9,8 @@ import psutil
 
 def train_func(train_cmd,  prj):
     print('-------------------> train thread start...')
+    print('train comd:')
+    print(train_cmd)
     log_file = prj.log_file
     info_cb = prj.train_cb
     prj.train_subprocess = subprocess.Popen(train_cmd, stdout=None, stderr=None) #, close_fds=True)
@@ -127,7 +129,7 @@ class ZXProj():
             for line in self.exp_cache:
                 f.writelines(line + '\n')
 
-    def start_train(self, gpu_num, batch_size, mix=False, pretrain='', info_cb=None):
+    def start_train(self, gpu_num, batch_size, mix=False, cache=False, pretrain='', info_cb=None):
         if self.train_process is None:
             if os.path.exists(self.log_file):
                 shutil.copy(self.log_file, self.log_file + '_' + str(time.time()))
@@ -142,8 +144,9 @@ class ZXProj():
 
             if mix:
                 train_cmd.append('--fp16')
-            if pretrain != '':
+            if cache:
                 train_cmd.append('-o')
+            if pretrain != '':
                 train_cmd.append('-c')
                 train_cmd.append(pretrain)
             if info_cb is not None:
