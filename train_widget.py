@@ -63,6 +63,14 @@ class CTrainWidget(QWidget, cUi):
         #if 'log' in info.keys():
         #    self.textLog.append(info['log'])
             
+    def load_data_from_log(self, init_data):
+        self.showFigure.clear_draw()
+        self.progressBar.setValue(0)
+        self.progressBar.setFormat(u'')
+        if len(init_data['iter_info']) > 0:
+            self.update_process_bar(init_data['progress_info'])
+            self.showFigure.init_data(init_data)
+
     def update_process_bar(self, infos):
         progress_value, iter_time, progress_str, remain_time = infos
 
@@ -136,6 +144,19 @@ class Figure_Canvas(FigureCanvas):
         self.map_50_95 = []
         self.map_75 = []
 
+    def init_data(self, init_data):
+        self.iters = init_data['iter_info']
+        self.total_losses = init_data['loss_info'][0]
+        self.iou_losses = init_data['loss_info'][1]
+        self.conf_losses = init_data['loss_info'][3]
+        self.cls_losses = init_data['loss_info'][4]
+        self.lrs = init_data['lr_info']
+        self.epochs = init_data['epoch']
+        self.map_50 = init_data['map'][0]
+        self.map_50_95 = init_data['map'][2]
+        self.map_75 = init_data['map'][1]
+        self.update_draw()
+
     def add_data(self, add_data): 
         if 'iter_info' in add_data.keys():
             self.iters.append(add_data['iter_info'])
@@ -201,7 +222,13 @@ class Figure_Canvas(FigureCanvas):
         line_map75 = self.ax_map.plot(self.epochs, self.map_75, label='map75')
         handles, labels = self.ax_map.get_legend_handles_labels()
         self.ax_map.legend(handles, labels)
-        #self.ax_map.legend(handles=[line_map50,line_map50_95,line_map75],labels=['map50', 'map50-95', 'map75'],loc='best')
+        
+        if len(self.map_50) > 0:
+            map50_max_index = np.argmax(np.array(self.map_50))
+            map50_max_value = self.map_50[map50_max_index]
+            map50_max_epoch = self.epochs[map50_max_index]
+            self.ax_map.annotate("max=%.4f"%map50_max_value, xy=(map50_max_epoch,map50_max_value), color='red')
+
         self.draw()
 
 if __name__ == "__main__":

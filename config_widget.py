@@ -92,12 +92,6 @@ class CConfigWidget(QWidget, cUi):
                 self.config_map[key][sub_key] = edit_value.text()
         self.m_prj.save_exp(self.config_map)
         
-        check_info = self.check_import_config()
-        if check_info != 'ok':
-            reply = QMessageBox.warning(self,
-                  u'错误', 
-                  check_info,
-                  QMessageBox.Yes)
 
     def get_config_value(self, key):
         for root_key in self.config_map.keys():
