@@ -35,10 +35,7 @@ class CTrainWidget(QWidget, cUi):
         self.progressBar.setValue(0)
 
         self.showFigure = Figure_Canvas()
- 
-        layout = QGridLayout()
-        layout.addWidget(self.showFigure)
-        self.frame.setLayout(layout)
+        self.vlayout_matplot.addWidget(self.showFigure)
 
         self.process_sig.connect(self.update_process_bar)
 
@@ -70,6 +67,13 @@ class CTrainWidget(QWidget, cUi):
         if len(init_data['iter_info']) > 0:
             self.update_process_bar(init_data['progress_info'])
             self.showFigure.init_data(init_data)
+        self.editBatch.setText(init_data['train']['batch'])
+        self.editGpu.setText(init_data['train']['gpu'])
+        self.editPretrain.setText(init_data['train']['pretrain'])
+        isFp16 = init_data['train']['fp16'] == 'True'
+        self.radioFp16.setChecked(isFp16)
+        isCache = init_data['train']['cache'] == 'True'
+        self.radioCache.setChecked(isCache)
 
     def update_process_bar(self, infos):
         progress_value, iter_time, progress_str, remain_time = infos
@@ -113,29 +117,27 @@ class CTrainWidget(QWidget, cUi):
         
 class Figure_Canvas(FigureCanvas):
     def __init__(self,parent=None,width=3.9,height=2.7,dpi=100):
-        self.fig=Figure(figsize=(3.9, 2.7), dpi=100)
+        self.fig=Figure(figsize=(3.9, 2.7), dpi=100, facecolor='#304052')
+        #self.fig.subplots_adjust(top=1, bottom=0, right=1, left=0, hspace=0, wspace=0)
         super(Figure_Canvas,self).__init__(self.fig)
-        #self.setParent(parent)
-        self.ax_total_loss=self.fig.add_subplot(231)
+        self.ax_total_loss=self.fig.add_subplot(231, fc='#182029')
         self.ax_total_loss.set_title("total loss")
-        self.ax_iou_loss=self.fig.add_subplot(232)
+        self.ax_iou_loss=self.fig.add_subplot(232, fc='#182029')
         self.ax_iou_loss.set_title("iou loss")
-        #self.ax_l1_loss=self.fig.add_subplot(233)
-        #self.ax_l1_loss.set_title("l1 loss")
-        self.ax_conf_loss=self.fig.add_subplot(233)
+        self.ax_conf_loss=self.fig.add_subplot(233, fc='#182029')
         self.ax_conf_loss.set_title("conf loss")
-        self.ax_cls_loss=self.fig.add_subplot(234)
+        self.ax_cls_loss=self.fig.add_subplot(234, fc='#182029')
         self.ax_cls_loss.set_title("cls loss")
-        self.ax_lr=self.fig.add_subplot(235)
+        self.ax_lr=self.fig.add_subplot(235, fc='#182029')
         self.ax_lr.set_title("lr")
-        self.ax_map=self.fig.add_subplot(236)
+        self.ax_map=self.fig.add_subplot(236, fc='#182029')
         self.ax_map.set_title("map")
-        self.fig.subplots_adjust(hspace=0.3)
+        #self.fig.subplots_adjust(hspace=0.3)
+        self.fig.set_tight_layout(True)
 
         self.iters = []
         self.total_losses = []
         self.iou_losses = []
-        #self.l1_losses = []
         self.conf_losses = []
         self.cls_losses = []
         self.lrs = []

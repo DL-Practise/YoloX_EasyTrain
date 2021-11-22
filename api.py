@@ -208,7 +208,12 @@ class ZXProj():
                     'lr_info': [],
                     'progress_info': [],
                     'epoch': [],
-                    'map':[[],[],[]]}
+                    'map':[[],[],[]],
+                    'train': {'batch': '4',
+                              'gpu':   '1',
+                              'fp16':  'False',
+                              'cache': 'False',
+                              'pretrain': ''}}
 
         if os.path.exists(self.log_file):
             with open(self.log_file, 'r') as f:
@@ -216,7 +221,21 @@ class ZXProj():
                 map_50_95 = 0
                 map_50 = 0
                 map_75 = 0
-                for line in f.readlines():
+                for line_id, line in enumerate(f.readlines()):
+                    if line_id == 0 and 'Namespace' in line:
+                        train_infos = line.split('(')[1].split(',')
+                        for train_info in train_infos:
+                            if 'batch' in train_info:
+                                log_infos['train']['batch'] = train_info.split('=')[-1]
+                            if 'cache' in train_info:
+                                log_infos['train']['cache'] = train_info.split('=')[-1]
+                            if 'ckpt' in train_info:
+                                log_infos['train']['pretrain'] = train_info.split('=')[-1].replace('\'', '')
+                            if 'devices' in train_info:
+                                log_infos['train']['gpu'] = train_info.split('=')[-1]
+                            if 'fp16' in train_info:
+                                log_infos['train']['fp16'] = train_info.split('=')[-1]                        
+
                     if 'epoch:' in line and 'iter:' in line and 'total_loss:' in line:
                         fileds = line.split(',')
                         epoch_info = int(fileds[0].split('-')[-1].split(':')[-1].split('/')[0])

@@ -1,8 +1,8 @@
-numpy==1.19.5
-matplotlib==3.3.4
-opencv_python==4.5.3.56
-psutil==5.8.0
-pycocotools==2.0.2
-PyQt5==5.15.5
-torch==1.9.1
-yolox==0.0.0
+numpy #==1.19.5
+matplotlib #==3.3.4
+opencv_python #==4.5.3.56
+psutil #==5.8.0
+pycocotools #==2.0.2
+PyQt5 #==5.15.5
+torch #==1.9.1
+yolox #==0.0.0

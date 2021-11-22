@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>805</width>
-    <height>678</height>
+    <width>813</width>
+    <height>552</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,10,0,2">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,10,1,2">
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
@@ -145,14 +145,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QFrame" name="frame">
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-      </widget>
+      <layout class="QVBoxLayout" name="vlayout_matplot"/>
      </item>
      <item>
       <widget class="QProgressBar" name="progressBar">

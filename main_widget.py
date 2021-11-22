@@ -13,6 +13,7 @@ import shutil
 from config_widget import CConfigWidget
 from train_widget import CTrainWidget
 from infer_widget import CInferWidget
+import qdarkstyle
 
 # ui配置文件
 cUi, cBase = uic.loadUiType("main_widget.ui")
@@ -97,7 +98,7 @@ class CMainWidget(QWidget, cUi):
         else:
             text, okPressed = QInputDialog.getText(self, "请输入工程名称","工程名（英文且不包含空格等特殊字符）:", QLineEdit.Normal, "")
             if okPressed and text != '':
-                model_names=('yolox_s','yolox_m','yolox_l','yolox_tiny','yolox_nano')
+                model_names=('yolox_s','yolox_m','yolox_l','yolox_x','yolox_tiny','yolox_nano')
                 model_name,ok=QInputDialog.getItem(self,"选择基线模型","基线模型",model_names,0,False)
                 if ok and model_name:
                     iterator = QTreeWidgetItemIterator(self.treeProj)
@@ -225,5 +226,6 @@ class CMainWidget(QWidget, cUi):
 if __name__ == "__main__":
     cApp = QApplication(sys.argv)
     cMainWidget = CMainWidget()
+    cApp.setStyleSheet(qdarkstyle.load_stylesheet(qt_api='pyqt5'))
     cMainWidget.show()
     sys.exit(cApp.exec_())

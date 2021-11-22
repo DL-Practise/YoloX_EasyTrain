@@ -26,7 +26,7 @@ class CConfigWidget(QWidget, cUi):
         self.simple_keys = ['yolox_root', 'num_classes', 'depth', 'width', 'input_size', 'data_dir', 'max_epoch', 
                             'basic_lr_per_img', 'train_ann', 'val_ann', 'enable_mixup', 'test_size', 
                             'test_conf', 'nmsthre']
-        self.show_mode = 'simple'
+        self.show_mode = 'detail'
         
     def check_import_config(self):
         yolox_root = self.get_config_value("yolox_root").replace('"', '')
@@ -111,7 +111,7 @@ class CConfigWidget(QWidget, cUi):
     def on_btnReset_clicked(self):
         print('button reset clicked')
 
-        model_names=('yolox_s','yolox_m','yolox_l','yolox_tiny','yolox_nano')
+        model_names=('yolox_s','yolox_m','yolox_l','yolox_x','yolox_tiny','yolox_nano')
         model_name,ok=QInputDialog.getItem(self,"选择重置到哪个基线模型","基线模型",model_names,0,False)
         if ok and model_name:
             self.m_prj.reset_exp(model_name)
